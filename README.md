@@ -5,4 +5,3 @@
 - 강연중 통계학과
 - 박민영 통계학과
 - 배민서 통계학과
-- why are there no notifications?
