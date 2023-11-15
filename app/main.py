@@ -4,7 +4,7 @@ app=Flask(__name__)
 
 @app.route('/')
 def input():
-    return render_template('input_1030.html')
+    return render_template('input.html')
 
 @app.route('/result',methods=['POST','GET'])
 def result():
@@ -12,10 +12,12 @@ def result():
         result=dict()
         result['Name']=request.form.get('name')
         result['StudentNumber']=request.form.get('StudentNumber')
-        result['Gender']=request.form.get('Gender')
+        result['University']=request.form.get('University')
         result['Major']=request.form.get('Major')
-        result['Languages']=" ".join(request.form.getlist('PL')) 
-        return render_template('result_1030.html',result=result)
+        result['Gender']=request.form.get('Gender')
+        result['Email']=request.form.get('Email_id')+'@'+request.form.get('Email_domain')
+        result['Programming Languages']=" ".join(request.form.getlist('PL')) 
+        return render_template('result.html',result=result)
 
 
 if __name__ =='__main__':
