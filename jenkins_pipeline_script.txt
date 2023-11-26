@@ -1,0 +1,49 @@
+pipeline {
+    agent any  
+
+	triggers {
+			pollSCM('*/3 * * * *')
+	} 
+
+    environment {
+        DOCKER = credentials('dockerhub')    
+    } 
+
+    stages {
+        stage('Prepare') {
+	 agent any 
+            steps {							
+		git url : 'https://github.com/beomseo00/2023-2-OSSPrac-i-Window-05.git/',
+						branch : 'main',
+						credentialsId: 'github'
+            }
+        }
+
+
+        stage('Build') {
+            
+            steps { 
+                dir('/var/jenkins_home/workspace/teamhw6'){
+                    sh 'docker compose build web'
+                }
+           }
+        }
+
+        stage('Tag') {
+            steps {
+                script { /
+                    sh "docker tag ${DOCKER_USR}/i-window ${DOCKER_USR}/i-window:${BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage('Push') {
+            steps {
+                script { 
+                    sh "docker login -u $DOCKER_USR -p $DOCKER_PSW"
+		            sh "docker push ${DOCKER_USR}/i-window:${BUILD_NUMBER}"
+                }
+            }
+        }
+    }
+}
