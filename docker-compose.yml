@@ -7,4 +7,3 @@ services:
     ports:
       - "100:100"
     command: "python main.py"
-
